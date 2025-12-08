@@ -37,7 +37,7 @@ function Dashboard() {
 
   // Get today's carbon footprint
   const todayCarbonFootprint =
-    user?.calorieHistory[0]?.carbonFootPrintToday || 0;
+    Math.round(user?.calorieHistory[0]?.carbonFootPrintToday * 100) / 100 || 0;
 
   const todayProtein = user?.calorieHistory[0]?.proteinToday || 0;
 
