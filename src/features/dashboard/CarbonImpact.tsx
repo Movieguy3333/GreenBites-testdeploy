@@ -24,6 +24,7 @@ export default function CarbonImpact({
   totalCarbonFootprint,
   carbonTrendData,
 }: CarbonImpactProps) {
+  const reversedCarbonTrend = [...carbonTrendData].reverse();
   /* const calculateStreak = () => {
     if (carbonTrendData.length === 0) return 0;
 
@@ -87,7 +88,7 @@ export default function CarbonImpact({
         </div>
 
         <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={carbonTrendData}>
+          <BarChart data={reversedCarbonTrend}>
             <defs>
               <linearGradient id="carbonGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />

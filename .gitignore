@@ -12,4 +12,6 @@ out/
 # clerk configuration (can include secrets)
 /.clerk/
 
+.env.local
 
+.env

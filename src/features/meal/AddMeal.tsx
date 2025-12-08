@@ -104,7 +104,7 @@ export default function AddMeal() {
   }
 
   // Add food to selected foods
-  function addFoodToSelection(food: CalorieNinjasItem) {
+  async function addFoodToSelection(food: CalorieNinjasItem) {
     const existingFood = selectedFoods.find((f) => f.name === food.name);
     if (existingFood) {
       // Update serving size if food already exists
@@ -115,6 +115,9 @@ export default function AddMeal() {
       );
     } else {
       // Add new food
+      const carbonFootprint =
+        (await calculateCarbonFootprint(food.calories, food.name)) || 0;
+
       const newFood: SelectedFood = {
         id: Date.now().toString(),
         name: food.name,
@@ -124,7 +127,7 @@ export default function AddMeal() {
         fats: food.fat_total_g,
         sodium: food.sodium_mg,
         servingSize: 1,
-        carbonFootprint: calculateCarbonFootprint(food.protein_g),
+        carbonFootprint,
       };
       setSelectedFoods([...selectedFoods, newFood]);
     }
@@ -145,11 +148,35 @@ export default function AddMeal() {
     );
   }
 
-  // Calculate carbon footprint based on protein
-  // Formula: ~0.05 kg CO2 per gram of protein
-  function calculateCarbonFootprint(proteinGrams: number): number {
-    const carbonFootprint = proteinGrams * 0.05;
-    return Math.round(carbonFootprint * 100) / 100;
+  // Calculate carbon footprint based on calories
+  async function calculateCarbonFootprint(
+    calories: number,
+    foodName: string
+  ): Promise<number> {
+    try {
+      const res = await fetch("/api/carbon-footprint", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          calories,
+          foodName,
+        }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        console.error("Failed to calculate carbon footprint:", errorData);
+        return 0;
+      }
+
+      const data = await res.json();
+      return data.carbonFootprint || 0;
+    } catch (error) {
+      console.error("Error calculating carbon footprint:", error);
+      return 0;
+    }
   }
 
   // Calculate totals for selected foods
@@ -202,7 +229,7 @@ export default function AddMeal() {
           carbsInGrams: Math.round(food.carbs * food.servingSize),
           fatInGrams: Math.round(food.fats * food.servingSize),
           sodiumInMg: Math.round(food.sodium * food.servingSize),
-          CO2Expense: Math.round(food.carbonFootprint * food.servingSize),
+          CO2Expense: food.carbonFootprint * food.servingSize,
           servingSize: food.servingSize,
         });
       }
@@ -263,7 +290,7 @@ export default function AddMeal() {
           {/* Left Column: Search and Selection */}
           <div className="space-y-6">
             {/* Food Search */}
-            <section className=" backdrop-blur-md rounded-3xl  p-8  border-emerald-600 border-2 border-solid">
+            <section className=" bg-white/80 backdrop-blur-md rounded-3xl  p-8  border-emerald-600 border-2 border-solid">
               <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-6 flex items-center">
                 <Search className="min-w-8 min-h-8 mr-3 text-blue-600" />
                 Search Food
@@ -324,7 +351,7 @@ export default function AddMeal() {
                         </div>
                       </div>
                       <button
-                        onClick={() => addFoodToSelection(food)}
+                        onClick={() => void addFoodToSelection(food)}
                         className="ml-4 p-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl transform  transition-all duration-300"
                       >
                         <Plus className="w-5 h-5" />

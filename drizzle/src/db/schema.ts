@@ -4,6 +4,7 @@ import {
   integer,
   timestamp,
   serial,
+  real,
 } from "drizzle-orm/pg-core";
 
 // Users
@@ -19,7 +20,7 @@ export const users = pgTable("users", {
   totalCarbs: integer("totalCarbs"),
   totalFats: integer("totalFats"),
   totalSodium: integer("totalSodium"),
-  totalCarbonFootPrint: integer("totalCarbonFootPrint"),
+  totalCarbonFootPrint: real("totalCarbonFootPrint"),
 });
 
 // Food Logs
@@ -37,5 +38,5 @@ export const foodLog = pgTable("foodLog", {
   carbs: integer("carbs"),
   fats: integer("fats"),
   sodium: integer("sodium"),
-  carbonFootPrintValue: integer("carbonFootPrintValue"),
+  carbonFootPrintValue: real("carbonFootPrintValue"),
 });

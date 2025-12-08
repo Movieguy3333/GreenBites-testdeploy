@@ -22,8 +22,6 @@ export default function HomePage() {
           <div className="flex flex-col lg:flex-row items-center">
             <div className="flex-1 w-full">
               <div className="relative h-full">
-                <div className="absolute -top-6 -left-8 w-32 h-32 bg-gradient-to-br from-emerald-200/70 to-green-300/50 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-10 -right-10 w-36 h-36 bg-gradient-to-br from-teal-200/60 to-blue-200/60 rounded-full blur-3xl"></div>
                 <Image
                   src="/logo2.jpg"
                   alt="GreenBites experience preview"
@@ -35,10 +33,6 @@ export default function HomePage() {
               </div>
             </div>
             <article className="flex-1 px-8 py-12 lg:py-16 space-y-6 text-left">
-              <p className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-emerald-600 bg-emerald-50 px-4 py-1 rounded-full">
-                <Sparkles className="w-4 h-4" />
-                All-in-one wellness
-              </p>
               <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight">
                 Track meals, stay motivated, and see the carbon impact in real
                 time.
@@ -68,15 +62,6 @@ export default function HomePage() {
       </section>
       <section className="relative flex flex-col items-center text-center px-6 pt-32 pb-40 overflow-hidden">
         <div className="flex flex-col items-center justify-center max-w-6xl mx-auto z-10">
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-100 to-green-100 px-4 py-2 rounded-full border border-emerald-200 mb-6">
-              <Sparkles className="w-4 h-4 text-emerald-600" />
-              <span className="text-emerald-700 font-semibold text-sm">
-                Eco-Friendly Nutrition Tracking
-              </span>
-            </div>
-          </div>
-
           <h1 className="text-6xl md:text-7xl font-bold mb-8 leading-tight">
             <span className="bg-gradient-to-r from-slate-800 via-emerald-700 to-green-600 bg-clip-text text-transparent">
               Nourish Yourself.
@@ -112,10 +97,6 @@ export default function HomePage() {
             <Sprout className="w-8 h-8 lg:w-20 lg:h-20 text-green-400 opacity-60" />
           </div>
         </div>
-
-        <Leaf className="absolute top-20 left-1/4 w-16 h-16 text-emerald-300 opacity-50" />
-
-        <Globe2 className="absolute top-1/3 right-1/4 w-12 h-12 text-teal-300 opacity-50" />
       </section>
       <section className="relative px-8 md:px-0 py-0">
         <div className="max-w-7xl mx-auto">

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const NUTRITION_API_KEY = process.env.NUTRITION_API_KEY || "3E9YfbcWaIFwspwgXs5oVg==vyJeVpWtQfKfjOkZ";
+const NUTRITION_API_KEY =
+  process.env.NUTRITION_API_KEY || "3E9YfbcWaIFwspwgXs5oVg==vyJeVpWtQfKfjOkZ";
 const NUTRITION_API_URL = "https://api.calorieninjas.com/v1/nutrition";
 
 export async function POST(req: NextRequest) {
@@ -9,10 +10,7 @@ export async function POST(req: NextRequest) {
     const { query } = body;
 
     if (!query || typeof query !== "string") {
-      return NextResponse.json(
-        { error: "Query is required" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Query is required" }, { status: 400 });
     }
 
     // Call the CalorieNinjas API
@@ -48,4 +46,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-

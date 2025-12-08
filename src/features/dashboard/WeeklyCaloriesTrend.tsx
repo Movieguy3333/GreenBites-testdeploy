@@ -20,7 +20,7 @@ type WeeklyCaloriesTrendProps = {
 export default function WeeklyCaloriesTrend({
   weeklyCalories,
 }: WeeklyCaloriesTrendProps) {
-  console.log(weeklyCalories);
+  const reversedWeeklyCalories = [...weeklyCalories].reverse();
   return (
     /*   lg:col-span-2 xl:col-span-1 */
     <div className="bg-white/80 rounded-3xl border-solid border-4 border-purple-600 p-8 ">
@@ -34,7 +34,7 @@ export default function WeeklyCaloriesTrend({
       </div>
 
       <ResponsiveContainer width="100%" height={300}>
-        <AreaChart data={weeklyCalories}>
+        <AreaChart data={reversedWeeklyCalories}>
           <defs>
             <linearGradient
               id="calorieTrendGradient"

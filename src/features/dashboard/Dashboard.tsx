@@ -12,8 +12,8 @@ function Dashboard() {
   const user = useUserContext();
   console.log(user);
   const firstName = useUser().user?.firstName || "User";
-  const caloriesToday = user.calorieHistory[user.calorieHistory.length - 1]
-    ? user.calorieHistory[user.calorieHistory.length - 1].caloriesToday
+  const caloriesToday = user.calorieHistory[0]
+    ? user.calorieHistory[0].caloriesToday
     : 0;
   const macroData = [
     { name: "Fat", value: user?.totalFats || 0, color: "#ef4444" },
@@ -24,7 +24,7 @@ function Dashboard() {
   const weeklyCalories: { day: string; calories: number }[] = [];
 
   if (user.calorieHistory.length > 0) {
-    for (let i = user.calorieHistory.length - 1; i >= 0; i--) {
+    for (let i = 0; i < user.calorieHistory.length; i++) {
       weeklyCalories.push({
         day: user.calorieHistory[i].date,
         calories: user.calorieHistory[i].caloriesToday,
@@ -37,17 +37,14 @@ function Dashboard() {
 
   // Get today's carbon footprint
   const todayCarbonFootprint =
-    user?.calorieHistory[user.calorieHistory.length - 1]
-      ?.carbonFootPrintToday || 0;
+    user?.calorieHistory[0]?.carbonFootPrintToday || 0;
 
-  const todayProtein =
-    user?.calorieHistory[user.calorieHistory.length - 1]?.proteinToday || 0;
+  const todayProtein = user?.calorieHistory[0]?.proteinToday || 0;
 
   const totalCarbonFootprint = user?.totalCarbonFootPrint || 0;
 
   // Get today's sodium
-  const todaySodium =
-    user?.calorieHistory[user.calorieHistory.length - 1]?.sodiumToday || 0;
+  const todaySodium = user?.calorieHistory[0]?.sodiumToday || 0;
 
   // Calculate remaining calories
   const remainingCalories = Math.max(0, calorieGoal - caloriesToday);
@@ -56,7 +53,7 @@ function Dashboard() {
   const sodiumTrendData: { day: string; sodium: number }[] = [];
 
   if (user.calorieHistory.length > 0) {
-    for (let i = user.calorieHistory.length - 1; i >= 0; i--) {
+    for (let i = 0; i < user.calorieHistory.length; i++) {
       sodiumTrendData.push({
         day: user.calorieHistory[i].date,
         sodium: user.calorieHistory[i].sodiumToday,
@@ -67,7 +64,7 @@ function Dashboard() {
   // Prepare carbon footprint trend data
   const carbonTrendData: { day: string; carbonFootprint: number }[] = [];
   if (user.calorieHistory.length > 0) {
-    for (let i = user.calorieHistory.length - 1; i >= 0; i--) {
+    for (let i = 0; i < user.calorieHistory.length; i++) {
       carbonTrendData.push({
         day: user.calorieHistory[i].date,
         carbonFootprint: user.calorieHistory[i].carbonFootPrintToday,
@@ -127,6 +124,7 @@ function Dashboard() {
               calorieGoal={calorieGoal}
               caloriePercentage={caloriePercentage}
             />
+            <WeeklyCaloriesTrend weeklyCalories={weeklyCalories} />
 
             <MacroNutrientsBreakdown macroData={macroData} />
 
@@ -134,8 +132,6 @@ function Dashboard() {
               todaySodium={todaySodium}
               sodiumTrendData={sodiumTrendData}
             />
-
-            <WeeklyCaloriesTrend weeklyCalories={weeklyCalories} />
           </div>
         </section>
 

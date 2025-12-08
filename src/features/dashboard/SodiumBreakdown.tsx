@@ -22,6 +22,7 @@ export default function SodiumBreakdown({
   todaySodium,
   sodiumTrendData,
 }: SodiumBreakdownProps) {
+  const reversedSodiumTrend = [...sodiumTrendData].reverse();
   return (
     <div className="bg-white/80 rounded-3xl border-solid border-4 border-red-600 p-8">
       <div className="flex items-center justify-between mb-6">
@@ -46,7 +47,7 @@ export default function SodiumBreakdown({
       </div>
 
       <ResponsiveContainer width="100%" height={200}>
-        <LineChart data={sodiumTrendData}>
+        <LineChart data={reversedSodiumTrend}>
           <defs>
             <linearGradient id="sodiumGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3} />
